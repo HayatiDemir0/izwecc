@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>izwec | Premium Dijital Çözümler</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* --- GLOBAL --- */
+        :root { --bg-white: #ffffff; --bg-light: #fbfbfc; --bg-gray: #f3f4f6; --text-black: #0f172a; --text-muted: #475569; --border: #e2e8f0; --container: 1280px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg-white); color: var(--text-black); line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+        a { text-decoration: none; color: inherit; transition: all 0.3s ease; }
+        ul { list-style: none; }
+        .container { max-width: var(--container); margin: 0 auto; padding: 0 5%; }
+
+        /* --- HEADER & MOBIL MENÜ --- */
+        header { border-bottom: 1px solid var(--border); background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 999; }
+        .header-inner { display: flex; justify-content: space-between; align-items: center; height: 90px; }
+        .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.5px; z-index: 1001; }
+        
+        .nav-menu { display: flex; gap: 2.5rem; align-items: center; }
+        .nav-menu a.nav-link { font-size: 0.95rem; font-weight: 500; color: var(--text-muted); }
+        .nav-menu a.nav-link:hover, .nav-menu a.active { color: var(--text-black); }
+        .btn-nav { background: var(--text-black); color: var(--bg-white); padding: 0.7rem 1.5rem; font-weight: 600; border-radius: 4px; }
+        .btn-nav:hover { background: #000; }
+
+        .hamburger { display: none; cursor: pointer; border: none; background: transparent; z-index: 1001; }
+        .hamburger svg { width: 30px; height: 30px; color: var(--text-black); }
+
+        /* --- TYPOGRAPHY --- */
+        .h-mega { font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 1.5rem; }
+        .h-section { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1rem; }
+        .text-lead { font-size: 1.25rem; color: var(--text-muted); max-width: 650px; line-height: 1.8; }
+
+        /* --- HERO --- */
+        .hero { padding: 140px 0 100px; background: var(--bg-light); border-bottom: 1px solid var(--border); }
+        .hero-label { text-transform: uppercase; font-size: 0.8rem; font-weight: 700; letter-spacing: 2px; color: var(--text-muted); display: block; margin-bottom: 1.5rem; }
+        .btn-primary { background: var(--text-black); color: var(--bg-white); padding: 1.1rem 2.5rem; font-weight: 600; font-size: 1rem; border-radius: 4px; display: inline-block; }
+
+        /* --- HAKKIMIZDA (Tam Esnek & Responsive) --- */
+        .about-pro { padding: 120px 0; border-bottom: 1px solid var(--border); }
+        .about-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 5rem; align-items: center; }
+        .about-text h2 { font-size: clamp(2rem, 3.5vw, 2.5rem); font-weight: 700; margin-bottom: 1.5rem; line-height: 1.2; letter-spacing: -0.02em; }
+        .about-text p { color: var(--text-muted); font-size: 1.15rem; margin-bottom: 1.5rem; line-height: 1.8; }
+        .about-stats { display: flex; gap: 3rem; margin-top: 3rem; border-top: 1px solid var(--border); padding-top: 2rem; flex-wrap: wrap; }
+        .stat h3 { font-size: 2.5rem; font-weight: 800; color: var(--text-black); line-height: 1; margin-bottom: 0.5rem; }
+        .stat span { font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600; letter-spacing: 1px; }
+        
+        .about-img-wrap { width: 100%; display: block; }
+        .about-img-wrap img { width: 100%; height: auto; aspect-ratio: 4/5; object-fit: cover; border-radius: 8px; box-shadow: 0 20px 40px rgba(0,0,0,0.04); display: block; }
+
+        /* --- ÇALIŞMALAR (Filtreli) --- */
+        .portfolio { padding: 140px 0; background: var(--bg-light); }
+        .portfolio-header { text-align: center; margin-bottom: 4rem; }
+        .filter-tabs { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 4rem; }
+        .filter-btn { background: transparent; border: 1px solid var(--border); padding: 0.7rem 1.5rem; border-radius: 50px; cursor: pointer; font-family: 'Inter'; font-weight: 600; color: var(--text-muted); transition: all 0.3s; }
+        .filter-btn:hover, .filter-btn.active { background: var(--text-black); color: var(--bg-white); border-color: var(--text-black); }
+
+        .work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+        .work-card { display: block; position: relative; border-radius: 8px; overflow: hidden; background: var(--bg-white); border: 1px solid var(--border); }
+        .work-img { aspect-ratio: 4/3; position: relative; overflow: hidden; background: var(--bg-gray); width: 100%; }
+        .work-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .work-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 50%); opacity: 0; transition: opacity 0.4s ease; }
+        .work-card:hover .work-img img { transform: scale(1.05); }
+        .work-card:hover .work-img::after { opacity: 1; }
+        .work-info { position: absolute; bottom: 0; left: 0; width: 100%; padding: 1.5rem; transform: translateY(10px); opacity: 0; transition: all 0.4s ease; z-index: 2; color: #fff; }
+        .work-card:hover .work-info { transform: translateY(0); opacity: 1; }
+        .work-info h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.2rem; }
+        .work-info span { font-size: 0.85rem; font-weight: 500; opacity: 0.9; }
+        .work-card.hide { display: none; }
+
+        /* --- SÜREÇ --- */
+        .services { padding: 140px 0; border-top: 1px solid var(--border); }
+        .service-list-item { display: grid; grid-template-columns: 80px 1fr 1.2fr; gap: 3rem; padding: 4rem 0; border-bottom: 1px solid var(--border); align-items: start; transition: padding 0.3s ease; }
+        .service-list-item:hover { padding-left: 20px; background: var(--bg-light); }
+        .service-num { font-size: 3rem; font-weight: 800; color: var(--border); line-height: 1; }
+        .service-title { font-size: 2rem; font-weight: 700; letter-spacing: -0.02em; }
+        .service-desc { color: var(--text-muted); font-size: 1.1rem; line-height: 1.7; }
+
+        /* --- FOOTER --- */
+        footer { padding: 80px 0 40px; background: var(--bg-white); border-top: 1px solid var(--border); }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 4rem; }
+        .footer-logo { font-size: 1.5rem; font-weight: 800; margin-bottom: 1rem; display: block; }
+        .footer-desc { color: var(--text-muted); max-width: 300px; font-size: 0.95rem; line-height: 1.7; }
+        .footer-col h5 { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1.5rem; color: var(--text-black); }
+        .footer-col li { margin-bottom: 0.8rem; }
+        .footer-col a { color: var(--text-muted); font-size: 0.95rem; }
+        .footer-col a:hover { color: var(--text-black); text-decoration: underline; }
+        .footer-bottom { border-top: 1px solid var(--border); padding-top: 2rem; display: flex; justify-content: space-between; color: var(--text-muted); font-size: 0.9rem; }
+
+        /* --- IPAD & TABLET (1024px) --- */
+        @media (max-width: 1024px) {
+            .hamburger { display: block; }
+            .nav-menu { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: var(--bg-white); flex-direction: column; justify-content: center; align-items: center; gap: 2rem; transform: translateY(-100%); transition: transform 0.4s ease-in-out; z-index: 1000; }
+            .nav-menu.active { transform: translateY(0); }
+            .nav-menu a.nav-link { font-size: 1.5rem; }
+            
+            .about-grid { grid-template-columns: 1fr; gap: 3rem; text-align: center; }
+            .about-stats { justify-content: center; }
+            .about-img-wrap { width: 100%; max-width: 800px; margin: 0 auto; } 
+            .about-img-wrap img { aspect-ratio: 16/9; }
+
+            .work-grid { grid-template-columns: repeat(2, 1fr); }
+            .service-list-item { grid-template-columns: 1fr; gap: 1rem; padding: 3rem 0; }
+            .service-list-item:hover { padding-left: 0; }
+            .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 3rem; }
+        }
+
+        /* --- MOBIL (768px) --- */
+        @media (max-width: 768px) { 
+            .about-stats { flex-direction: column; gap: 1.5rem; align-items: center; }
+            .about-img-wrap img { aspect-ratio: 4/3; }
+            .work-grid { grid-template-columns: 1fr; } 
+            .footer-grid { grid-template-columns: 1fr; text-align: center; }
+            .footer-logo, .footer-desc { margin: 0 auto 1rem; }
+            .footer-bottom { flex-direction: column; gap: 1.5rem; text-align: center; } 
+            .footer-bottom div { justify-content: center; } 
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-inner">
+            <a href="index.html" class="logo">izwec.</a>
+            <nav class="nav-menu" id="navMenu">
+                <a href="calismalar.html" class="nav-link">Çalışmalar</a>
+                <a href="surec.html" class="nav-link">Süreç</a>
+                <a href="hakkimizda.html" class="nav-link">Hakkımızda</a>
+                <a href="blog.html" class="nav-link">Blog</a>
+                <a href="#" class="btn-nav">Projeyi Konuşalım</a>
+            </nav>
+            <button class="hamburger" onclick="toggleMenu()" aria-label="Menüyü Aç">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <span class="hero-label">Stratejik Dijital Çözümler</span>
+            <h1 class="h-mega">Kurumsal Kimliğinizi<br>Dijitale Taşıyoruz.</h1>
+            <p class="text-lead">İşletmelerin vizyonunu ileriye taşıyan, strateji odaklı ve tamamen kuruma özel tasarımlar geliştiriyoruz. Kusursuz mimari, minimalist yaklaşım.</p>
+            <div style="margin-top: 3rem;">
+                <a href="#work" class="btn-primary">Projelerimizi İncele</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-pro container">
+        <div class="about-grid">
+            <div class="about-text">
+                <h2>Biz bir web tasarım ajansı değiliz,<br>dijital büyüme ortağınızız.</h2>
+                <p>izwec olarak, sadece göze güzel gelen siteler yapmıyoruz. Markanızın itibarını, güvenilirliğini ve satış potansiyelini dijital dünyaya en doğru mimariyle entegre ediyoruz.</p>
+                <p>Şablonların ötesinde, sizin sektörünüze ve hedeflerinize özel stratejiler kodluyoruz.</p>
+                <div class="about-stats">
+                    <div class="stat"><h3>%100</h3><span>Özel Mimari</span></div>
+                    <div class="stat"><h3>Senior</h3><span>Uzman Ekip</span></div>
+                </div>
+            </div>
+            <div class="about-img-wrap">
+                <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80" alt="izwec Ekibi">
+            </div>
+        </div>
+    </section>
+
+    <section id="work" class="portfolio">
+        <div class="container">
+            <div class="portfolio-header">
+                <h2 class="h-section">Seçkin Sektörel Çözümler</h2>
+                <p class="text-lead" style="margin: 0 auto;">Farklı sektörlerin spesifik ihtiyaçlarına yönelik hazırladığımız kusursuz projeler.</p>
+            </div>
+            <div class="filter-tabs">
+                <button class="filter-btn active" onclick="filterSelection('all')">Tümü</button>
+                <button class="filter-btn" onclick="filterSelection('avukat')">Avukat</button>
+                <button class="filter-btn" onclick="filterSelection('cekici')">Oto Çekici</button>
+                <button class="filter-btn" onclick="filterSelection('dis')">Diş Kliniği</button>
+                <button class="filter-btn" onclick="filterSelection('eticaret')">E-Ticaret</button>
+                <button class="filter-btn" onclick="filterSelection('otel')">Otel</button>
+                <button class="filter-btn" onclick="filterSelection('guzellik')">Güzellik</button>
+            </div>
+            <div class="work-grid">
+                <!-- Avukat -->
+                <a href="#" class="work-card avukat"><div class="work-img"><img src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=800" alt="Avukat"></div><div class="work-info"><h3>Hukuk Bürosu</h3><span>Avukat</span></div></a>
+                <a href="#" class="work-card avukat"><div class="work-img"><img src="https://images.unsplash.com/photo-1505664177941-ebf11119b91e?q=80&w=800" alt="Avukat"></div><div class="work-info"><h3>Danışmanlık</h3><span>Avukat</span></div></a>
+                <a href="#" class="work-card avukat"><div class="work-img"><img src="https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?q=80&w=800" alt="Avukat"></div><div class="work-info"><h3>Global Hukuk</h3><span>Avukat</span></div></a>
+                <!-- Çekici -->
+                <a href="#" class="work-card cekici"><div class="work-img"><img src="https://images.unsplash.com/photo-1605488169994-375812903c15?q=80&w=800" alt="Çekici"></div><div class="work-info"><h3>7/24 Yol Yardım</h3><span>Oto Çekici</span></div></a>
+                <a href="#" class="work-card cekici"><div class="work-img"><img src="https://images.unsplash.com/photo-1563720225384-97216aee70c1?q=80&w=800" alt="Çekici"></div><div class="work-info"><h3>Operasyon</h3><span>Oto Çekici</span></div></a>
+                <a href="#" class="work-card cekici"><div class="work-img"><img src="https://images.unsplash.com/photo-1616421319082-53d937398188?q=80&w=800" alt="Çekici"></div><div class="work-info"><h3>Kurtarıcı</h3><span>Oto Çekici</span></div></a>
+                <!-- Diş -->
+                <a href="#" class="work-card dis"><div class="work-img"><img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?q=80&w=800" alt="Diş"></div><div class="work-info"><h3>Premium Klinik</h3><span>Diş Kliniği</span></div></a>
+                <a href="#" class="work-card dis"><div class="work-img"><img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?q=80&w=800" alt="Diş"></div><div class="work-info"><h3>Gülüş Tasarımı</h3><span>Diş Kliniği</span></div></a>
+                <a href="#" class="work-card dis"><div class="work-img"><img src="https://images.unsplash.com/photo-1598256989800-fea5f95bc803?q=80&w=800" alt="Diş"></div><div class="work-info"><h3>Ortodonti</h3><span>Diş Kliniği</span></div></a>
+                <!-- E-Ticaret -->
+                <a href="#" class="work-card eticaret"><div class="work-img"><img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=800" alt="E-Ticaret"></div><div class="work-info"><h3>Saat Mağazası</h3><span>E-Ticaret</span></div></a>
+                <a href="#" class="work-card eticaret"><div class="work-img"><img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=800" alt="E-Ticaret"></div><div class="work-info"><h3>Moda Giyim</h3><span>E-Ticaret</span></div></a>
+                <a href="#" class="work-card eticaret"><div class="work-img"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=800" alt="E-Ticaret"></div><div class="work-info"><h3>Teknoloji</h3><span>E-Ticaret</span></div></a>
+                <!-- Otel -->
+                <a href="#" class="work-card otel"><div class="work-img"><img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800" alt="Otel"></div><div class="work-info"><h3>Luxury Resort</h3><span>Otel</span></div></a>
+                <a href="#" class="work-card otel"><div class="work-img"><img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800" alt="Otel"></div><div class="work-info"><h3>Butik Tatil Köyü</h3><span>Otel</span></div></a>
+                <a href="#" class="work-card otel"><div class="work-img"><img src="https://images.unsplash.com/photo-1551882547-ff40c0d589rx?q=80&w=800" alt="Otel"></div><div class="work-info"><h3>Şehir Suitleri</h3><span>Otel</span></div></a>
+                <!-- Güzellik -->
+                <a href="#" class="work-card guzellik"><div class="work-img"><img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=800" alt="Güzellik"></div><div class="work-info"><h3>Cilt Bakım Merkezi</h3><span>Güzellik Merkezi</span></div></a>
+                <a href="#" class="work-card guzellik"><div class="work-img"><img src="https://images.unsplash.com/photo-1522337660859-02fbefca4702?q=80&w=800" alt="Güzellik"></div><div class="work-info"><h3>Estetik & Lazer</h3><span>Güzellik Merkezi</span></div></a>
+                <a href="#" class="work-card guzellik"><div class="work-img"><img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?q=80&w=800" alt="Güzellik"></div><div class="work-info"><h3>VIP Spa Salonu</h3><span>Güzellik Merkezi</span></div></a>
+            </div>
+        </div>
+    </section>
+
+    <section class="services container">
+        <h2 class="h-section" style="margin-bottom: 4rem;">Sürecimiz & Yetkinliklerimiz</h2>
+        <div class="service-list-item">
+            <div class="service-num">01</div>
+            <div class="service-title">Strateji ve Raporlama</div>
+            <div class="service-desc">Markanızın ihtiyaçlarını analiz eder, hedeflerinizi belirler ve rakiplerinizden ayrışacağınız bir dijital mimari yol haritası çizeriz.</div>
+        </div>
+        <div class="service-list-item">
+            <div class="service-num">02</div>
+            <div class="service-title">UX/UI Arayüz Tasarımı</div>
+            <div class="service-desc">Kullanıcı deneyimini ön planda tutan, şablonlardan tamamen uzak, kurumsal prestijinizi artıracak şık ve minimalist arayüzler tasarlarız.</div>
+        </div>
+        <div class="service-list-item">
+            <div class="service-num">03</div>
+            <div class="service-title">Geliştirme (Clean Code)</div>
+            <div class="service-desc">En güncel teknolojilerle hızlı, güvenli, Google (SEO) dostu ve kusursuz çalışan sağlam bir teknik altyapı inşa ederiz.</div>
+        </div>
+        <div class="service-list-item">
+            <div class="service-num">04</div>
+            <div class="service-title">Büyüme ve Destek</div>
+            <div class="service-desc">Proje teslim edildikten sonra da yanınızdayız. Düzenli güvenlik güncellemeleri ve performans izleme ile yatırımınızı koruruz.</div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <a href="index.html" class="footer-logo">izwec.</a>
+                    <p class="footer-desc">İşletmenizin misyonunu ileriye taşıyan stratejik dijital tasarımlar. İzmir'de tasarlandı, globale hizmet veriyor.</p>
+                </div>
+                <div class="footer-col">
+                    <h5>Süreç</h5>
+                    <ul>
+                        <li><a href="surec.html">Strateji</a></li>
+                        <li><a href="surec.html">Tasarım</a></li>
+                        <li><a href="surec.html">Geliştirme</a></li>
+                        <li><a href="surec.html">Destek</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h5>Şirket</h5>
+                    <ul>
+                        <li><a href="hakkimizda.html">Hakkımızda</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="#">Kariyer</a></li>
+                        <li><a href="#">İletişim</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h5>Sosyal</h5>
+                    <ul>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">Dribbble</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 izwec Web Design. Tüm hakları saklıdır.</p>
+                <div style="display: flex; gap: 1.5rem;">
+                    <a href="#">Gizlilik Politikası</a>
+                    <a href="#">Çerezler</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
+        filterSelection("all")
+        function filterSelection(c) {
+            var x, i;
+            x = document.getElementsByClassName("work-card");
+            if (c == "all") c = "";
+            for (i = 0; i < x.length; i++) {
+                x[i].classList.add("hide");
+                if (x[i].className.indexOf(c) > -1) { x[i].classList.remove("hide"); }
+            }
+        }
+        var btns = document.getElementsByClassName("filter-btn");
+        for (var i = 0; i < btns.length; i++) {
+            btns[i].addEventListener("click", function() {
+                var current = document.getElementsByClassName("active");
+                if (current.length > 0) { current[0].className = current[0].className.replace(" active", ""); }
+                this.className += " active";
+            });
+        }
+    </script>
+</body>
+</html>
