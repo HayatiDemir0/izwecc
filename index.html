@@ -109,12 +109,30 @@
             border: none;
             background: transparent;
             z-index: 1001;
+            padding: 4px;
         }
 
         .hamburger svg {
             width: 30px;
             height: 30px;
             color: var(--text-black);
+        }
+
+        /* Hamburger icon'ları toggle */
+        .hamburger .icon-open {
+            display: block;
+        }
+
+        .hamburger .icon-close {
+            display: none;
+        }
+
+        .hamburger.active .icon-open {
+            display: none;
+        }
+
+        .hamburger.active .icon-close {
+            display: block;
         }
 
         /* --- TYPOGRAPHY --- */
@@ -167,7 +185,7 @@
             display: inline-block;
         }
 
-        /* --- HAKKIMIZDA (Tam Esnek & Responsive) --- */
+        /* --- HAKKIMIZDA --- */
         .about-pro {
             padding: 120px 0;
             border-bottom: 1px solid var(--border);
@@ -235,7 +253,7 @@
             display: block;
         }
 
-        /* --- ÇALIŞMALAR (Filtreli) --- */
+        /* --- ÇALIŞMALAR --- */
         .portfolio {
             padding: 140px 0;
             background: var(--bg-light);
@@ -453,7 +471,7 @@
             font-size: 0.9rem;
         }
 
-        /* --- IPAD & TABLET (1024px) --- */
+        /* --- TABLET (1024px) --- */
         @media (max-width: 1024px) {
             .hamburger {
                 display: block;
@@ -568,19 +586,26 @@
         <div class="container header-inner">
             <a href="index.html" class="logo">izwec</a>
             <nav class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link">Ana Sayfa</a>
                 <a href="calismalar.html" class="nav-link">Çalışmalar</a>
                 <a href="surec.html" class="nav-link">Süreç</a>
                 <a href="hakkimizda.html" class="nav-link">Hakkımızda</a>
-                <a href="blog.html" class="nav-link">Blog</a>
                 <a href="https://wa.me/905016980536?text=Merhaba,%20web%20sitesi%20paketleriniz%20hakkında%20bilgi%20almak%20istiyorum."
                     target="_blank" rel="noopener noreferrer" class="btn-nav">Projeyi Konuşalım</a>
             </nav>
-            <button class="hamburger" onclick="toggleMenu()" aria-label="Menüyü Aç">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round">
+            <button class="hamburger" id="hamburgerBtn" onclick="toggleMenu()" aria-label="Menüyü Aç/Kapat">
+                <!-- Hamburger (3 çizgi) ikonu -->
+                <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
                     <line x1="3" y1="12" x2="21" y2="12"></line>
                     <line x1="3" y1="6" x2="21" y2="6"></line>
                     <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+                <!-- Çarpı (X) ikonu -->
+                <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
                 </svg>
             </button>
         </div>
@@ -593,7 +618,8 @@
             <p class="text-lead">İşletmelerin vizyonunu ileriye taşıyan, strateji odaklı ve tamamen kuruma özel
                 tasarımlar geliştiriyoruz. Kusursuz mimari, minimalist yaklaşım.</p>
             <div style="margin-top: 3rem;">
-                <a href="#work" class="btn-primary">Projelerimizi İncele</a>
+                <a href="https://wa.me/905016980536?text=Merhaba,%20web%20sitesi%20paketleriniz%20hakkında%20bilgi%20almak%20istiyorum."
+                    target="_blank" rel="noopener noreferrer" class="btn-primary">Projeyi Konuşalım</a>
             </div>
         </div>
     </section>
@@ -615,7 +641,7 @@
                 </div>
             </div>
             <div class="about-img-wrap">
-                <img src="img/İzwec.jpg" alt="izwec Ekibi">
+                <img src="img/websiteleri.jpg" alt="izwec Ekibi">
             </div>
         </div>
     </section>
@@ -632,14 +658,13 @@
                 <button class="filter-btn" onclick="filterSelection('avukat')">Avukat</button>
                 <button class="filter-btn" onclick="filterSelection('cekici')">Oto Çekici</button>
                 <button class="filter-btn" onclick="filterSelection('dis')">Diş Kliniği</button>
-                <button class="filter-btn" onclick="filterSelection('eticaret')">E-Ticaret</button>
+                <button class="filter-btn" onclick="filterSelection('eticaret')">Spor Salonu</button>
                 <button class="filter-btn" onclick="filterSelection('otel')">Otel</button>
-                <button class="filter-btn" onclick="filterSelection('guzellik')">Güzellik</button>
+                <button class="filter-btn" onclick="filterSelection('guzellik')">Güzellik Merkezi</button>
             </div>
             <div class="work-grid">
 
                 <!-- AVUKAT -->
-                <!-- Sadece bu karta "tumu-goster" ekledik, Tümü'ne basıldığında Avukatları bu temsil edecek -->
                 <a href="#" class="work-card avukat tumu-goster">
                     <div class="work-img"><img src="img/örnek.png" alt="Avukat"></div>
                     <div class="work-info">
@@ -660,7 +685,6 @@
                 </a>
 
                 <!-- ÇEKİCİ -->
-                <!-- Sadece bu karta "tumu-goster" ekledik -->
                 <a href="#" class="work-card cekici tumu-goster">
                     <div class="work-img"><img src="img/örnek.png" alt="Çekici"></div>
                     <div class="work-info">
@@ -810,8 +834,8 @@
                 <div class="footer-col">
                     <h5>Şirket</h5>
                     <ul>
+                        <li><a href="index.html">Ana Sayfa</a></li>
                         <li><a href="hakkimizda.html">Hakkımızda</a></li>
-                        <li><a href="blog.html">Blog</a></li>
                         <li><a href="calismalar.html">Kariyer</a></li>
                         <li><a href="https://wa.me/905016980536?text=Merhaba,%20web%20sitesi%20paketleriniz%20hakkında%20bilgi%20almak%20istiyorum."
                                 class="whatsapp-float" target="_blank" rel="noopener noreferrer">İletişim</a></li>
@@ -820,7 +844,7 @@
                 <div class="footer-col">
                     <h5>Sosyal</h5>
                     <ul>
-                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="https://www.linkedin.com/in/izwec-lab-81a36740a/" target="_blank">LinkedIn</a></li>
                         <li><a href="https://www.instagram.com/izweclab/" target="_blank">Instagram</a></li>
                     </ul>
                 </div>
@@ -828,36 +852,34 @@
             <div class="footer-bottom">
                 <p>&copy; 2026 izwec Web Design. Tüm hakları saklıdır.</p>
                 <div style="display: flex; gap: 1.5rem;">
-                    <a href="#">Gizlilik Politikası</a>
+                    <a href="gizlilik.html">Gizlilik Politikası</a>
                     <a href="#">Çerezler</a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- GÜNCELLENEN AKILLI JAVASCRIPT -->
     <script>
-        function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
-
-        // Sayfa açıldığında "tumu-goster" sınıfı olan vitrin kartlarını göster
-        filterSelection("tumu-goster")
+        function toggleMenu() {
+            const menu = document.getElementById('navMenu');
+            const btn = document.getElementById('hamburgerBtn');
+            menu.classList.toggle('active');
+            btn.classList.toggle('active');
+        }
+        filterSelection("tumu-goster");
 
         function filterSelection(c) {
             var x, i;
             x = document.getElementsByClassName("work-card");
-
-            // Eğer "Tümü" butonuna basılırsa, sadece "tumu-goster" sınıfı olanları çek
             if (c == "all") c = "tumu-goster";
-
             for (i = 0; i < x.length; i++) {
-                x[i].classList.add("hide"); // Önce hepsini gizle
+                x[i].classList.add("hide");
                 if (x[i].className.indexOf(c) > -1) {
-                    x[i].classList.remove("hide"); // Eşleşenleri göster
+                    x[i].classList.remove("hide");
                 }
             }
         }
 
-        // Tıklanan butona "active" sınıfı vererek siyah renge boya
         var btns = document.getElementsByClassName("filter-btn");
         for (var i = 0; i < btns.length; i++) {
             btns[i].addEventListener("click", function () {
